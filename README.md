@@ -168,6 +168,8 @@ Http status : 204 StatusNoContent
 
 ## Running the Service
 
+The service will be available on `localhost:8080`
+
 Using docker compose
 ```bash
 docker-compose up --build 
@@ -179,8 +181,23 @@ go mod tidy
 go run cmd/main.go
 ```
 
+### Improvements
+- Currently, the same `Task` model is used for both request parsing and response formatting.
+- It is a better practice to use **DTOs (Data Transfer Objects)** for handling incoming requests and **DAOs (Data Access Objects)** or models for database operations. Exposing internal models directly can lead to tight coupling and security issues.
+- Error handling can be improved — currently, many endpoints return generic errors. Structured and descriptive error responses would improve debuggability and client usability.
+- Future improvements may include:
+  - Adding middleware for structured logging and request tracing
+  - Integrating with an external authentication/authorization service
+  - Switching from SQLite to PostgreSQL or another production-ready database
+  - Adding rate limiting and request validation
+  - Including Swagger/OpenAPI documentation for automated API exploration
+
+
+
 ## Microservices Concepts Demonstrated
 
-- **Single Responsibility Principle**: Separate handler, service, and repository layers
-- **Scalable architecture**: containerized and deployable using orchestration tools and can be horizontally scaled using replicas
-- **Extensibility**: Ready for integration with other microservices (e.g., user/auth service)
+- **Single Responsibility Principle**: Clean separation between handlers (controllers), services (business logic), and repositories (data access).
+- **Scalable Architecture**: The service is containerized using Docker and can be deployed via orchestration tools like Docker Compose/Swarm or Kubernetes. It supports horizontal scaling via replicas.
+- **Extensibility**: Designed to support the addition of new microservices (e.g., User Service, Auth Service). Inter-service communication could be enabled via REST APIs or gRPC in future iterations.
+- **Environment Isolation**: Can Use environment variables and a `.env`-friendly setup to allow flexible deployment across environments (dev/staging/production).
+- **Stateless Design**: Each replica of the service can handle any request independently, making it suitable for load balancing and distributed deployments.
