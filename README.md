@@ -5,6 +5,15 @@
 
 This is a simple Task Management backend built using Go with the Gin web framework. It supports task creation, retrieval, updating, deletion, pagination, and filtering by status.
 
+## Prerequisites
+
+Before you run this project, ensure you have the following installed:
+
+- [Go 1.20+] (if running via local)
+- [Docker]
+- [Docker Compose] (if running via `docker-compose`)
+- Git
+
 ## 🔧 Problem Breakdown & Design Decisions
 
 ### Requirements:
@@ -47,8 +56,8 @@ This is a simple Task Management backend built using Go with the Gin web framewo
 
 ```json
 {
-  "title": "Write README",
-  "description": "Complete documentation",
+  "title": "Finish project",
+  "description": "Complete the task management service",
   "status": "Pending"
 }
 ```
@@ -91,7 +100,7 @@ GET /tasks?status=Pending&page=1&limit=2
 ```
 
 **Response**
-```
+```json
 Http status : 200 OK
 [
   {
