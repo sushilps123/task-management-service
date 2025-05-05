@@ -1,4 +1,4 @@
-package task
+package repository
 
 import (
 	models "task-management/internal/app/task/models"

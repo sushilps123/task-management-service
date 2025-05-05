@@ -45,6 +45,12 @@ Before you run this project, ensure you have the following installed:
 | PUT    | /tasks/:id     | Update a task          |
 | DELETE | /tasks/:id     | Delete a task          |
 
+### Status Field
+
+The `status` field must be one of the following:
+- `Pending`
+- `In Progress`
+- `Completed`
 
 ## Sample Request and responses
 

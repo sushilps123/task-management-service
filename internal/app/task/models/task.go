@@ -1,6 +1,32 @@
-package task
+package models
 
-import "time"
+import (
+	"strings"
+	"time"
+)
+
+type TaskStatus string
+
+const (
+	StatusPending    TaskStatus = "Pending"
+	StatusInProgress TaskStatus = "In Progress"
+	StatusCompleted  TaskStatus = "Completed"
+)
+
+var ValidStatuses = []TaskStatus{
+	StatusPending,
+	StatusInProgress,
+	StatusCompleted,
+}
+
+func IsValidStatus(status string) bool {
+	for _, s := range ValidStatuses {
+		if strings.EqualFold(string(s), status) {
+			return true
+		}
+	}
+	return false
+}
 
 type Task struct {
 	ID          uint      `json:"id" gorm:"primaryKey"`

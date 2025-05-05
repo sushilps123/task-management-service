@@ -1,4 +1,4 @@
-package task
+package handlers
 
 import (
 	"net/http"
@@ -24,6 +24,12 @@ func (h *Handler) CreateTask(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	if !models.IsValidStatus(task.Status) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status. Valid statuses are: Pending, In Progress, Completed"})
+		return
+	}
+
 	if err := h.Service.CreateTask(&task); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -69,6 +75,12 @@ func (h *Handler) UpdateTask(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	if !models.IsValidStatus(task.Status) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status. Valid statuses are: Pending, In Progress, Completed"})
+		return
+	}
+
 	task.ID = uint(id)
 	if err := h.Service.UpdateTask(&task); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
